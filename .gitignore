@@ -1,0 +1,34 @@
+﻿# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment and local settings
+.env
+.env.*
+
+# Frontend dependencies and build output
+frontend/node_modules/
+frontend/dist/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local backup
+backup_before_pages_20261024_102441/
+
+# Large source/audit data not required to run the app
+data/calfire_2024_perimeters.geojson
+models/forest_fire_baseline.pkl
+
+# Temporary frontend backups
+frontend/**/*.bak
+frontend/**/*.brand-backup
+frontend/README.md
+
+# Temporary frontend backup files
+frontend/src/*.backup.*
