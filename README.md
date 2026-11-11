@@ -1,5 +1,23 @@
-﻿# ForestWatch 🌲
+# ForestWatch 🌲
 
+<p align="center">
+  <strong>Machine Learning Based Forest Fire Prediction & Exploration</strong>
+</p>
+
+<p align="center">
+  <a href="https://jovial-frangipane-4c0356.netlify.app/">
+    <img src="https://img.shields.io/badge/🌲_LIVE_DEMO-Launch_ForestWatch-16a085?style=for-the-badge" alt="Launch ForestWatch Live Demo" />
+  </a>
+  <a href="https://forestwatch-q4s8.onrender.com/docs">
+    <img src="https://img.shields.io/badge/API-Documentation-087ea4?style=for-the-badge" alt="Backend API Documentation" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://jovial-frangipane-4c0356.netlify.app/">Open Live Application →</a>
+</p>
+
+---
 ForestWatch is a student machine learning project focused on exploring forest fire data and estimating next-day fire occurrence using weather-related features.
 
 The project combines a machine learning model, model evaluation, weather information, and historical fire perimeter visualization in one web application.
