@@ -1,20 +1,35 @@
-# ForestWatch 🌲
+<h1 align="center">ForestWatch 🌲</h1>
 
 <p align="center">
-  <strong>Machine Learning Based Forest Fire Prediction & Exploration</strong>
+  <em>Machine Learning Based Forest Fire Prediction & Exploration</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/REACT-19-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/VITE-FRONTEND-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/FASTAPI-BACKEND-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/PYTHON-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/SCIKIT--LEARN-ML-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white" alt="Scikit-learn" />
+  <img src="https://img.shields.io/badge/LEAFLET-MAPS-199900?style=for-the-badge&logo=leaflet&logoColor=white" alt="Leaflet" />
 </p>
 
 <p align="center">
   <a href="https://jovial-frangipane-4c0356.netlify.app/">
-    <img src="https://img.shields.io/badge/🌲_LIVE_DEMO-Launch_ForestWatch-16a085?style=for-the-badge" alt="Launch ForestWatch Live Demo" />
+    <img src="https://img.shields.io/badge/LIVE_DEMO-CLICK_TO_OPEN-16a085?style=for-the-badge" alt="Live Demo" />
   </a>
   <a href="https://forestwatch-q4s8.onrender.com/docs">
-    <img src="https://img.shields.io/badge/API-Documentation-087ea4?style=for-the-badge" alt="Backend API Documentation" />
+    <img src="https://img.shields.io/badge/API-DOCUMENTATION-087ea4?style=for-the-badge" alt="API Documentation" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://jovial-frangipane-4c0356.netlify.app/">Open Live Application →</a>
+  <strong>Explore weather-based fire predictions, model explanations, live weather and historical fire perimeters.</strong>
+</p>
+
+<p align="center">
+  <a href="https://jovial-frangipane-4c0356.netlify.app/">
+    Launch ForestWatch →
+  </a>
 </p>
 
 ---
@@ -63,38 +78,38 @@ The project combines a machine learning model, model evaluation, weather informa
 
 ```text
 ForestWatch/
-│
-├── backend/
-│   └── api/
-│       ├── main.py
-│       ├── evaluation.py
-│       ├── comparison.py
-│       ├── weather.py
-│       └── geography.py
-│
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── Weather.jsx
-│   │   ├── Geography.jsx
-│   │   └── ...
-│   ├── package.json
-│   └── index.html
-│
-├── data/
-│   ├── CA_Weather_Fire_Dataset_1984-2025.csv
-│   ├── next_day_fire_dataset.csv
-│   ├── calfire_2024_perimeters_simplified.geojson
-│   └── calfire_perimeters.csv
-│
-├── models/
-│   └── forest_fire_model.pkl
-│
-├── train_model.py
-├── save_model.py
-├── predict.py
-├── requirements.txt
-└── README.md
+â”‚
+â”œâ”€â”€ backend/
+â”‚   â””â”€â”€ api/
+â”‚       â”œâ”€â”€ main.py
+â”‚       â”œâ”€â”€ evaluation.py
+â”‚       â”œâ”€â”€ comparison.py
+â”‚       â”œâ”€â”€ weather.py
+â”‚       â””â”€â”€ geography.py
+â”‚
+â”œâ”€â”€ frontend/
+â”‚   â”œâ”€â”€ src/
+â”‚   â”‚   â”œâ”€â”€ App.jsx
+â”‚   â”‚   â”œâ”€â”€ Weather.jsx
+â”‚   â”‚   â”œâ”€â”€ Geography.jsx
+â”‚   â”‚   â””â”€â”€ ...
+â”‚   â”œâ”€â”€ package.json
+â”‚   â””â”€â”€ index.html
+â”‚
+â”œâ”€â”€ data/
+â”‚   â”œâ”€â”€ CA_Weather_Fire_Dataset_1984-2025.csv
+â”‚   â”œâ”€â”€ next_day_fire_dataset.csv
+â”‚   â”œâ”€â”€ calfire_2024_perimeters_simplified.geojson
+â”‚   â””â”€â”€ calfire_perimeters.csv
+â”‚
+â”œâ”€â”€ models/
+â”‚   â””â”€â”€ forest_fire_model.pkl
+â”‚
+â”œâ”€â”€ train_model.py
+â”œâ”€â”€ save_model.py
+â”œâ”€â”€ predict.py
+â”œâ”€â”€ requirements.txt
+â””â”€â”€ README.md
 ```
 
 The repository also contains supporting data-validation files and analysis scripts.
@@ -219,13 +234,13 @@ The prediction endpoint accepts the following features:
 | Feature | Description | Unit |
 |---|---|---|
 | `previous_day_precipitation` | Previous day's precipitation | Inches |
-| `previous_day_max_temp` | Previous day's maximum temperature | °F |
-| `previous_day_min_temp` | Previous day's minimum temperature | °F |
+| `previous_day_max_temp` | Previous day's maximum temperature | Â°F |
+| `previous_day_min_temp` | Previous day's minimum temperature | Â°F |
 | `previous_day_avg_wind_speed` | Previous day's average wind speed | mph |
 | `previous_7d_precipitation_sum` | Total precipitation over the previous 7 days | Inches |
 | `previous_7d_wind_speed_mean` | Average wind speed over the previous 7 days | mph |
-| `target_month` | Month of the prediction date | 1–12 |
-| `target_day_of_year` | Day number of the prediction date | 1–366 |
+| `target_month` | Month of the prediction date | 1â€“12 |
+| `target_day_of_year` | Day number of the prediction date | 1â€“366 |
 
 The backend validates the input values before generating a prediction.
 
