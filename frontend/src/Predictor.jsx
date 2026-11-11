@@ -1,5 +1,5 @@
-﻿
-import { useEffect, useState } from 'react'
+
+import { useState } from 'react'
 import './Predictor.css'
 
 const API_URL = 'http://127.0.0.1:8000'
@@ -20,19 +20,6 @@ function App() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [apiStatus, setApiStatus] = useState('checking')
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/health`)
-      .then((response) => {
-        if (!response.ok) throw new Error('API unavailable')
-        return response.json()
-      })
-      .then((data) => {
-        setApiStatus(data.model_file_exists ? 'connected' : 'model-missing')
-      })
-      .catch(() => setApiStatus('offline'))
-  }, [])
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -298,6 +285,81 @@ function App() {
                   <strong>{(Number(result.threshold) * 100).toFixed(0)}%</strong>
                 </div>
                 <p className="result-note">{result.note}</p>
+
+                {result.explanation?.features?.length > 0 && (
+                  <section className="shap-explanation">
+                    <div className="shap-heading">
+                      <span className="section-number">03 / EXPLANATION</span>
+                      <h3>What influenced this prediction?</h3>
+                      <p>
+                        These values show how each feature influenced the model's
+                        output for this particular prediction.
+                      </p>
+                    </div>
+
+                    <div className="shap-legend">
+                      <span className="positive-label">+ Toward fire-start</span>
+                      <span className="negative-label">− Away from fire-start</span>
+                    </div>
+
+                    <div className="shap-list">
+                      {result.explanation.features.map((feature) => {
+                        const maxContribution = Math.max(
+                          ...result.explanation.features.map(
+                            (item) => Math.abs(item.contribution)
+                          ),
+                          0.000001
+                        )
+
+                        const positive = feature.contribution >= 0
+                        const featureNames = {
+                          TARGET_DAY_OF_YEAR: 'Day of year',
+                          TARGET_MONTH: 'Target month',
+                          PREV_DAY_MIN_TEMP: 'Previous minimum temperature',
+                          PREV_DAY_MAX_TEMP: 'Previous maximum temperature',
+                          PREV_DAY_PRECIPITATION: 'Previous day precipitation',
+                          PREV_DAY_AVG_WIND_SPEED: 'Previous average wind speed',
+                          PREV_DAY_TEMP_RANGE: 'Previous temperature range',
+                          PREV_DAY_WIND_TEMP_RATIO: 'Wind / temperature ratio',
+                          PREV7D_PRECIPITATION_SUM: '7-day precipitation total',
+                          PREV7D_WIND_SPEED_MEAN: '7-day average wind speed',
+                        }
+
+                        return (
+                          <div className="shap-row" key={feature.feature}>
+                            <div className="shap-feature-top">
+                              <strong>
+                                {featureNames[feature.feature] || feature.feature}
+                              </strong>
+                              <span className={positive ? 'positive-value' : 'negative-value'}>
+                                {positive ? '+' : ''}
+                                {feature.contribution.toFixed(4)}
+                              </span>
+                            </div>
+
+                            <div className="shap-feature-meta">
+                              <span>Input: {Number(feature.value).toFixed(3)}</span>
+                            </div>
+
+                            <div className="shap-bar-track">
+                              <span
+                                className={positive ? 'shap-bar positive-bar' : 'shap-bar negative-bar'}
+                                style={{
+                                  width: `${Math.abs(feature.contribution) / maxContribution * 100}%`,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    <p className="shap-note">
+                      SHAP values explain the model's behaviour, not real-world
+                      causes. They are contribution values, not percentages.
+                    </p>
+                  </section>
+                )}
                 <button className="reset-button result-reset" onClick={() => setResult(null)} type="button">
                   Run another test
                 </button>
@@ -336,11 +398,3 @@ function App() {
 }
 
 export default App
-
-
-
-
-
-
-
-

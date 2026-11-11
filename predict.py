@@ -1,13 +1,18 @@
-from pathlib import Path
+﻿from pathlib import Path
+from functools import lru_cache
+
 import joblib
+import numpy as np
 import pandas as pd
+import shap
 
 
-MODEL_FILE = Path("models/forest_fire_model.pkl")
+MODEL_FILE = Path(__file__).resolve().parent / "models" / "forest_fire_model.pkl"
 
 
+@lru_cache(maxsize=1)
 def load_model():
-    """Load the saved model and its expected feature order."""
+    """Load and cache the saved model and its expected feature order."""
     if not MODEL_FILE.exists():
         raise FileNotFoundError(
             f"Model not found: {MODEL_FILE}. Run save_model.py first."
@@ -20,6 +25,64 @@ def load_model():
         artifact["features"],
         artifact["threshold"],
     )
+
+
+@lru_cache(maxsize=1)
+def load_explainer():
+    """Create and cache the SHAP TreeExplainer."""
+    model, _, _ = load_model()
+    return shap.TreeExplainer(model)
+
+
+def get_shap_explanation(input_df, model, probability):
+    """Return SHAP contributions for the positive class (class 1)."""
+    explainer = load_explainer()
+    explanation = explainer(input_df)
+
+    shap_values = np.asarray(explanation.values)
+    class_index = list(model.classes_).index(1)
+
+    if shap_values.ndim == 3:
+        contributions = shap_values[0, :, class_index]
+    elif shap_values.ndim == 2:
+        contributions = shap_values[0]
+    else:
+        raise ValueError("Unexpected SHAP values shape.")
+
+    base_values = np.asarray(explanation.base_values)
+
+    if base_values.ndim >= 2:
+        base_value = float(base_values[0, class_index])
+    elif base_values.ndim == 1 and base_values.size > 1:
+        base_value = float(base_values[class_index])
+    else:
+        base_value = float(base_values.reshape(-1)[0])
+
+    features = []
+
+    for feature, contribution in zip(input_df.columns, contributions):
+        features.append({
+            "feature": feature,
+            "value": float(input_df.iloc[0][feature]),
+            "contribution": float(contribution),
+        })
+
+    features.sort(
+        key=lambda item: abs(item["contribution"]),
+        reverse=True,
+    )
+
+    return {
+        "method": "SHAP TreeExplainer",
+        "base_value": round(base_value, 6),
+        "prediction_score": round(probability, 6),
+        "features": features,
+        "note": (
+            "Positive contributions move the model output toward the "
+            "fire-start class. Negative contributions move it away. "
+            "These values explain the model, not real-world causation."
+        ),
+    }
 
 
 def predict_fire_risk(
@@ -107,6 +170,8 @@ def predict_fire_risk(
     probability = float(model.predict_proba(input_df)[0, 1])
     prediction = int(probability >= threshold)
 
+    explanation = get_shap_explanation(input_df, model, probability)
+
     return {
         "prediction": prediction,
         "predicted_label": (
@@ -117,6 +182,7 @@ def predict_fire_risk(
         "risk_score_percent": round(probability * 100, 2),
         "threshold": threshold,
         "model": "Random Forest Classifier",
+        "explanation": explanation,
         "note": (
             "Educational prediction against the dataset's label definition; "
             "not a verified real-world wildfire probability or official warning."
@@ -138,5 +204,11 @@ if __name__ == "__main__":
     )
 
     print("\n========== SAMPLE PREDICTION ==========")
+
     for key, value in result.items():
-        print(f"{key}: {value}")
+        if key == "explanation":
+            print("\n========== SHAP EXPLANATION ==========")
+            for explanation_key, explanation_value in value.items():
+                print(f"{explanation_key}: {explanation_value}")
+        else:
+            print(f"{key}: {value}")

@@ -1,6 +1,9 @@
-﻿
+
 import { BrowserRouter, Routes, Route, Link, NavLink, useLocation } from 'react-router-dom'
 import Predictor from './Predictor.jsx'
+import Performance from './Performance.jsx'
+import Weather from './Weather.jsx'
+import Geography from './Geography.jsx'
 import './App.css'
 
 function Home() {
@@ -97,16 +100,6 @@ function Home() {
 function FutureUpdates() {
   const plannedFeatures = [
     {
-      title: 'Live weather data',
-      description:
-        'Explore the possibility of using current weather observations instead of entering every value manually.',
-    },
-    {
-      title: 'Geographic exploration',
-      description:
-        'Add a map-based view to explore wildfire-related information by location.',
-    },
-    {
       title: 'Model improvement',
       description:
         'Evaluate additional data sources and validation methods to improve reliability.',
@@ -145,7 +138,7 @@ function FutureUpdates() {
       </section>
 
       <Link className="text-link back-link" to="/">
-        â† Back to home
+        ← Back to home
       </Link>
     </main>
   )
@@ -181,6 +174,15 @@ function SiteLayout() {
           <NavLink to="/predict" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Predict
           </NavLink>
+          <NavLink to="/performance" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Performance
+          </NavLink>
+          <NavLink to="/weather" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Live Weather
+          </NavLink>
+          <NavLink to="/geography" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            Geographic Exploration
+          </NavLink>
           <NavLink to="/future-updates" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Future Updates
           </NavLink>
@@ -196,6 +198,9 @@ function SiteLayout() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/predict" element={<Predictor />} />
+        <Route path="/performance" element={<Performance />} />
+        <Route path="/weather" element={<Weather />} />
+        <Route path="/geography" element={<Geography />} />
         <Route path="/future-updates" element={<FutureUpdates />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -218,8 +223,3 @@ export default function App() {
     </BrowserRouter>
   )
 }
-
-
-
-
-

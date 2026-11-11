@@ -960,3 +960,114 @@
   }
 }
 /* ---- End compact predictor cleanup ---- */
+
+/* SHAP prediction explanation */
+
+.shap-explanation {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #dce3d9;
+}
+
+.shap-heading h3 {
+  margin: 12px 0 8px;
+  color: #263e50;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.shap-heading p,
+.shap-note {
+  color: #68756c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.shap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 18px 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.positive-label,
+.positive-value {
+  color: #416d59;
+}
+
+.negative-label,
+.negative-value {
+  color: #a45f50;
+}
+
+.shap-list {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.shap-row {
+  width: 100%;
+}
+
+.shap-feature-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.shap-feature-top strong {
+  color: #35483c;
+  font-weight: 600;
+}
+
+.shap-feature-meta {
+  margin-top: 4px;
+  color: #7b857c;
+  font-size: 11px;
+}
+
+.shap-bar-track {
+  width: 100%;
+  height: 5px;
+  margin-top: 8px;
+  overflow: hidden;
+  background: #e9ede7;
+  border-radius: 10px;
+}
+
+.shap-bar {
+  display: block;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.positive-bar {
+  background: #416d59;
+}
+
+.negative-bar {
+  background: #b87968;
+}
+
+.shap-note {
+  margin-top: 20px;
+  padding-top: 13px;
+  border-top: 1px solid #e4e8e1;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .shap-feature-top {
+    font-size: 12px;
+  }
+
+  .shap-legend {
+    gap: 9px;
+    font-size: 11px;
+  }
+}

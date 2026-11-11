@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 import sys
 
 from fastapi import FastAPI, HTTPException
@@ -11,6 +11,10 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from predict import predict_fire_risk
+from backend.api.evaluation import get_model_evaluation
+from backend.api.comparison import get_model_comparison
+from backend.api.weather import get_live_weather
+from backend.api.geography import get_fire_perimeters
 
 
 app = FastAPI(
@@ -98,4 +102,54 @@ def predict(payload: PredictionInput):
         raise HTTPException(
             status_code=500,
             detail="Prediction failed. Check the backend terminal for details.",
+        ) from exc
+
+
+@app.get("/api/evaluation")
+def evaluation():
+    try:
+        return get_model_evaluation()
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail="Model evaluation failed. Check the backend terminal for details.",
+        ) from exc
+
+
+@app.get("/api/model-comparison")
+def model_comparison():
+    try:
+        return get_model_comparison()
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail="Model comparison failed. Check the backend terminal for details.",
+        ) from exc
+
+
+
+@app.get("/api/weather")
+def live_weather(location: str):
+    try:
+        return get_live_weather(location)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@app.get("/api/fire-perimeters")
+def fire_perimeters():
+    try:
+        return get_fire_perimeters()
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail="Fire perimeter data could not be loaded.",
         ) from exc

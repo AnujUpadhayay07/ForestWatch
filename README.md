@@ -1,151 +1,283 @@
 ﻿# ForestWatch 🌲
 
-ForestWatch is a machine learning project that explores next-day fire-start prediction using historical California weather and fire data.
+ForestWatch is a student machine learning project focused on exploring forest fire data and estimating next-day fire occurrence using weather-related features.
 
-It combines a React frontend, a FastAPI backend, and a Random Forest classification model.
+The project combines a machine learning model, model evaluation, weather information, and historical fire perimeter visualization in one web application.
 
-> **Disclaimer:** This project is for educational purposes. It is not an official wildfire warning system and should not be used for emergency decisions.
+**Note:** ForestWatch is an academic project. Its predictions are experimental and should not be used for real-world emergency decisions or wildfire response.
 
 ## Features
 
-- Forest-inspired web interface.
-- Next-day fire-start prediction from weather inputs.
-- Machine learning using a Random Forest classifier.
-- FastAPI prediction and health-check endpoints.
-- Separate frontend and backend.
-- Historical dataset analysis and model evaluation.
+- **Fire Prediction:** Estimate next-day fire occurrence using weather and date-related inputs.
+- **Model Explanation:** View feature contributions using SHAP.
+- **Model Performance:** Check evaluation metrics and the confusion matrix.
+- **Model Comparison:** Compare Random Forest and Logistic Regression.
+- **Live Weather:** View current and recent weather information for selected California cities.
+- **Geographic Exploration:** Explore historical 2024 CAL FIRE perimeter records on an interactive map.
+- **Future Updates:** View possible improvements planned for the project.
 
 ## Tech Stack
 
 **Frontend**
-- React
+- React 19
 - Vite
 - React Router
+- Leaflet
+- React Leaflet
+- CSS
 
 **Backend**
-- Python
+- Python 3.13
 - FastAPI
-- Pydantic
-
-**Machine Learning**
-- pandas
+- Uvicorn
+- Pandas
 - NumPy
-- scikit-learn
-- joblib
+- Scikit-learn
+- SHAP
+
+**Data and Visualization**
+- Matplotlib
+- Open-Meteo API
+- CAL FIRE perimeter data
+- GeoJSON
 
 ## Project Structure
 
 ```text
 ForestWatch/
+│
 ├── backend/
 │   └── api/
-│       └── main.py
-├── data/
-│   ├── CA_Weather_Fire_Dataset_1984-2025.csv
-│   └── next_day_fire_dataset.csv
+│       ├── main.py
+│       ├── evaluation.py
+│       ├── comparison.py
+│       ├── weather.py
+│       └── geography.py
+│
 ├── frontend/
 │   ├── src/
+│   │   ├── App.jsx
+│   │   ├── Weather.jsx
+│   │   ├── Geography.jsx
+│   │   └── ...
 │   ├── package.json
 │   └── index.html
+│
+├── data/
+│   ├── CA_Weather_Fire_Dataset_1984-2025.csv
+│   ├── next_day_fire_dataset.csv
+│   ├── calfire_2024_perimeters_simplified.geojson
+│   └── calfire_perimeters.csv
+│
 ├── models/
-│   ├── forest_fire_model.pkl
-│   └── forest_fire_baseline.pkl
-├── output/
+│   └── forest_fire_model.pkl
+│
 ├── train_model.py
-├── predict.py
 ├── save_model.py
-├── evaluate_saved_model.py
+├── predict.py
+├── requirements.txt
 └── README.md
 ```
 
-The project also contains additional data-validation files and analysis scripts.
+The repository also contains supporting data-validation files and analysis scripts.
 
 ## Requirements
 
-- Python 3.13 recommended for the current development setup.
-- Node.js and npm.
-- Project virtual environment and required Python packages.
-- Dataset and trained model files.
+- Python 3.13
+- Node.js and npm
+- Git (optional)
 
 ## Installation and Setup
 
-### 1. Start the Backend
+### 1. Clone the repository
 
-Open PowerShell in the project folder:
+```bash
+git clone https://github.com/AnujUpadhayay07/ForestWatch.git
+cd ForestWatch
+```
+
+### 2. Set up the backend
+
+Create and activate a virtual environment:
 
 ```powershell
-Set-Location "$HOME\Desktop\ForestWatch"
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+```
+
+Install Python dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Start the backend:
+
+```powershell
 python -m uvicorn backend.api.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Backend URL: http://127.0.0.1:8000
+Backend API:
 
-API documentation: http://127.0.0.1:8000/docs
+```text
+http://127.0.0.1:8000
+```
 
-### 2. Start the Frontend
+API documentation:
 
-Open a second PowerShell terminal:
+```text
+http://127.0.0.1:8000/docs
+```
+
+### 3. Set up the frontend
+
+Open another terminal:
 
 ```powershell
-Set-Location "$HOME\Desktop\ForestWatch\frontend"
+cd frontend
 npm install
 npm run dev
 ```
 
-Open the local URL displayed by Vite, usually http://localhost:5173.
+Open the local development URL shown by Vite, usually:
+
+```text
+http://localhost:5173
+```
+
+Keep the backend and frontend terminals running while using the application.
 
 ## Application Pages
 
-- `/` — Home page
-- `/predict` — Fire prediction page
-- `/future-updates` — Future updates page
-
-## API Endpoints
-
-| Method | Endpoint | Description |
+| Page | Route | Description |
 |---|---|---|
-| GET | `/` | Checks whether the API is running |
-| GET | `/api/health` | Checks API health and model-file availability |
-| POST | `/api/predict` | Generates a next-day prediction |
+| Home | `/` | Project introduction and overview |
+| Predict | `/predict` | Enter weather features and estimate fire occurrence |
+| Performance | `/performance` | View evaluation metrics and compare models |
+| Live Weather | `/weather` | Explore current and recent weather conditions |
+| Geographic Exploration | `/geography` | Explore historical 2024 CAL FIRE perimeters |
+| Future Updates | `/future-updates` | View planned improvements |
 
-The prediction API accepts previous-day precipitation, maximum and minimum temperature, average wind speed, previous seven-day weather summaries, target month, and target day of year.
+## Backend API Endpoints
 
-**Units:** Temperature is in Fahrenheit, precipitation in inches, and wind speed in miles per hour.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/` | Backend welcome response |
+| GET | `/api/health` | Check backend status |
+| POST | `/api/predict` | Generate a fire prediction |
+| GET | `/api/evaluation` | Retrieve model evaluation results |
+| GET | `/api/model-comparison` | Compare model performance |
+| GET | `/api/weather?location=Los%20Angeles` | Retrieve weather information |
+| GET | `/api/fire-perimeters` | Retrieve historical fire perimeter data |
+
+## Prediction Inputs
+
+The prediction endpoint accepts the following features:
+
+| Feature | Description | Unit |
+|---|---|---|
+| `previous_day_precipitation` | Previous day's precipitation | Inches |
+| `previous_day_max_temp` | Previous day's maximum temperature | °F |
+| `previous_day_min_temp` | Previous day's minimum temperature | °F |
+| `previous_day_avg_wind_speed` | Previous day's average wind speed | mph |
+| `previous_7d_precipitation_sum` | Total precipitation over the previous 7 days | Inches |
+| `previous_7d_wind_speed_mean` | Average wind speed over the previous 7 days | mph |
+| `target_month` | Month of the prediction date | 1–12 |
+| `target_day_of_year` | Day number of the prediction date | 1–366 |
+
+The backend validates the input values before generating a prediction.
+
+## Model Evaluation and Comparison
+
+The project uses a saved Random Forest model for fire prediction.
+
+The Performance page displays evaluation metrics such as:
+
+- Accuracy
+- Balanced Accuracy
+- Precision
+- Recall
+- F1-score
+- ROC-AUC
+- PR-AUC
+- Confusion Matrix
+
+The project also compares Random Forest with Logistic Regression using the same feature set and chronological data split.
+
+The model training cutoff is **January 1, 2020**. Evaluation uses data from the later period as a historical held-out test set.
+
+These results describe performance on the available dataset. They do not guarantee accuracy for future or real-world wildfire events.
+
+## Live Weather
+
+The Live Weather page uses the Open-Meteo API to retrieve weather information for five California locations:
+
+- Los Angeles
+- San Francisco
+- Sacramento
+- San Diego
+- Redding
+
+It displays current weather conditions and recent historical weather observations.
+
+Weather information is provided for exploration only. It is not directly connected to the fire prediction model.
+
+## Geographic Exploration
+
+The Geographic Exploration page displays historical fire perimeter records from CAL FIRE for 2024.
+
+It includes:
+
+- Interactive fire perimeter map
+- Fire name search
+- Fire perimeter selection
+- Fire acreage
+- Alarm date
+- Containment date
+
+The map uses a simplified GeoJSON dataset containing 552 historical records.
+
+**Important:** These are historical fire perimeters, not live fire locations or active incident updates.
 
 ## Machine Learning Workflow
 
-The training script uses `data/next_day_fire_dataset.csv` and predicts the `FIRE_START_DAY` target.
+The project follows a chronological data split to maintain the time order of observations.
 
-The dataset is sorted by date. The current training script uses:
-- Records before 1 January 2020 for training.
-- Records from 1 January 2020 onward for testing.
-
-The feature set includes previous-day weather measurements, previous seven-day weather summaries, and calendar features.
-
-The training workflow evaluates classification performance using metrics such as accuracy, balanced accuracy, precision, recall, F1-score, average precision, and ROC-AUC.
+1. Load and inspect the weather and fire dataset.
+2. Prepare the features required for next-day fire prediction.
+3. Split the dataset using the January 1, 2020 training cutoff.
+4. Train the Random Forest model on the earlier records.
+5. Evaluate the model using later records.
+6. Save the trained model for backend prediction.
+7. Use the saved model to generate predictions through the API.
+8. Apply SHAP to help explain feature contributions.
 
 ## Dataset
 
-The project includes the *California Weather and Fire Prediction Dataset (1984–2025) with Engineered Features*, published on Zenodo, along with a derived next-day dataset and supporting validation files.
+The project uses a California weather and fire dataset covering records from 1984 to 2025.
 
-Historical fire labels and weather observations may not always align perfectly. Dataset quality and label accuracy can affect predictions, so results should be interpreted carefully.
+The dataset contains weather-related features and fire occurrence information. Additional CAL FIRE perimeter data is used for historical geographic exploration.
+
+Data preparation, validation, and supporting analysis files are also included in the project.
 
 ## Limitations
 
-- Predictions follow the dataset's target definition.
-- A predicted label is not a confirmed real-world fire event or a calibrated fire probability.
-- Historical test performance does not guarantee future accuracy.
-- The application does not replace official fire-risk assessments or emergency services.
+- Predictions depend on the quality and availability of input data.
+- Historical model performance may not represent future wildfire conditions.
+- Weather information depends on the external Open-Meteo service.
+- Geographic exploration currently displays historical 2024 CAL FIRE records only.
+- The project does not provide real-time wildfire detection or emergency alerts.
 
 ## Future Improvements
 
-- Improve historical fire-label validation.
-- Compare additional machine learning algorithms.
-- Add clearer model evaluation charts.
-- Explain which input factors influence a prediction.
-- Explore reliable, current weather and fire data integrations.
+Possible improvements include:
+
+- Adding more recent and diverse fire datasets.
+- Improving model performance and validation.
+- Adding historical fire trend analysis.
+- Expanding geographic coverage.
+- Exploring additional weather and environmental features.
 
 ## Academic Purpose
 
-ForestWatch demonstrates data preparation, machine learning, model evaluation, API development, and frontend integration as part of an educational project.
+ForestWatch was developed as an academic machine learning project to explore data preprocessing, model training, model evaluation, explainability, API development, and frontend integration in a single application.

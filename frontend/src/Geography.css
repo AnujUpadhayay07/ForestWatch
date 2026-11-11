@@ -1,0 +1,286 @@
+.geography-page {
+  max-width: 1280px;
+  padding-bottom: 60px;
+}
+
+.geography-intro {
+  margin: 38px 0 30px;
+  max-width: 720px;
+}
+
+.geography-title {
+  margin: 10px 0;
+  color: #263b30;
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.2;
+}
+
+.geography-intro > p:last-child {
+  color: #657368;
+  line-height: 1.7;
+}
+
+.geography-message {
+  padding: 24px 0;
+  color: #526b58;
+}
+
+.geography-error {
+  padding: 20px;
+  border: 1px solid #e4b9aa;
+  border-radius: 8px;
+  background: #fff8f4;
+  color: #873f2c;
+}
+
+.geography-error button {
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #385d45;
+  color: white;
+  cursor: pointer;
+}
+
+.geography-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 28px 0 24px;
+}
+
+.geography-search {
+  width: min(100%, 360px);
+}
+
+.geography-search label {
+  display: block;
+  margin-bottom: 8px;
+  color: #66766a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.geography-search input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d9dfd4;
+  border-radius: 6px;
+  background: #fff;
+  color: #263b30;
+}
+
+.geography-search input:focus {
+  outline: 2px solid #8ba88a;
+  outline-offset: 2px;
+}
+
+.geography-count {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: #738075;
+  font-size: 13px;
+}
+
+.geography-count strong {
+  color: #315b3d;
+  font-size: 25px;
+  font-family: 'Manrope', sans-serif;
+}
+
+.geography-map-section {
+  overflow: hidden;
+  border: 1px solid #e0e4d9;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.geography-map-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px;
+}
+
+.geography-map-heading h2,
+.fire-details-heading h2 {
+  margin: 5px 0 0;
+  color: #293e30;
+  font-family: 'Manrope', sans-serif;
+  font-size: 21px;
+}
+
+.map-year-label {
+  padding: 7px 11px;
+  border-radius: 4px;
+  background: #edf2e9;
+  color: #41634a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.geography-map {
+  width: 100%;
+  height: 590px;
+  background: #e9eee6;
+}
+
+.fire-map {
+  width: 100%;
+  height: 100%;
+  background: #e9eee6;
+}
+
+.geography-map .leaflet-container {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.geography-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 14px 20px;
+  border-top: 1px solid #e8ebe4;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #69766b;
+  font-size: 12px;
+}
+
+.legend-swatch {
+  width: 13px;
+  height: 13px;
+  border: 1px solid #416d59;
+  border-radius: 2px;
+}
+
+.fire-swatch {
+  background: #d58a55;
+}
+
+.selected-swatch {
+  border-color: #8f321e;
+  background: #e87942;
+}
+
+.fire-details {
+  margin-top: 25px;
+  padding: 22px;
+  border: 1px solid #e0e4d9;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.fire-details-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.clear-selection {
+  padding: 8px 12px;
+  border: 1px solid #d8e0d5;
+  border-radius: 5px;
+  background: #fff;
+  color: #45634b;
+  cursor: pointer;
+}
+
+.clear-selection:hover {
+  background: #f1f5ee;
+}
+
+.fire-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.fire-detail-grid > div {
+  padding: 15px;
+  border-left: 2px solid #91a985;
+  background: #f7f8f3;
+}
+
+.fire-detail-grid span {
+  display: block;
+  margin-bottom: 8px;
+  color: #788378;
+  font-size: 12px;
+}
+
+.fire-detail-grid strong {
+  color: #304b38;
+  font-size: 15px;
+}
+
+.fire-empty-state {
+  color: #758176;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.geography-source,
+.geography-disclaimer {
+  color: #788378;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.geography-source {
+  margin-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .geography-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .geography-search {
+    width: 100%;
+  }
+
+  .geography-count {
+    justify-content: flex-start;
+  }
+
+  .geography-map {
+    height: 440px;
+  }
+
+  .fire-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .geography-map {
+    height: 360px;
+  }
+
+  .geography-map-heading,
+  .fire-details {
+    padding: 15px;
+  }
+
+  .fire-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fire-details-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
