@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Weather.css'
+import { API_URL } from './api'
 
 const locations = [
   'Los Angeles',
@@ -34,7 +35,7 @@ function Weather() {
 
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/weather?location=${encodeURIComponent(location)}`,
+          `${API_URL}/api/weather?location=${encodeURIComponent(location)}`,
           { signal: controller.signal }
         )
 
@@ -198,7 +199,7 @@ function Weather() {
           </section>
 
           <p className="weather-source">
-            Weather source: {weather.source} · Time zone: {weather.timezone}
+            Weather source: {weather.source} | Time zone: {weather.timezone}
           </p>
           <p className="weather-disclaimer">
             This page is for weather exploration only. These observations are

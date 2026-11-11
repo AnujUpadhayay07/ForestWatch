@@ -1,8 +1,8 @@
 
 import { useState } from 'react'
 import './Predictor.css'
+import { API_URL } from './api'
 
-const API_URL = 'http://127.0.0.1:8000'
 
 const initialForm = {
   previous_day_precipitation: '',
@@ -128,7 +128,7 @@ function App() {
             </div>
             <div className="landscape-caption">
               <span>FIELD NOTES / 01</span>
-              <span>Weather Â· California dataset</span>
+              <span>Weather - California dataset</span>
             </div>
           </div>
         </section>
@@ -258,7 +258,7 @@ function App() {
               <div className="empty-result loading-result">
                 <div className="loader-mark" />
                 <p className="result-kicker">PROCESSING INPUTS</p>
-                <h2>Reading the<br />conditionsâ€¦</h2>
+                <h2>Reading the<br />conditions...</h2>
               </div>
             )}
 
@@ -266,7 +266,7 @@ function App() {
               <div className="prediction-result">
                 <p className="result-kicker">PREDICTED DATASET LABEL</p>
                 <div className={`prediction-symbol ${isFireLabel ? 'fire' : 'clear'}`}>
-                  {isFireLabel ? '!' : 'âœ“'}
+                  {isFireLabel ? '!' : 'OK'}
                 </div>
                 <h2>{isFireLabel ? 'Fire-start label' : 'No fire-start label'}</h2>
                 <p className="prediction-description">{result.predicted_label}</p>
@@ -299,7 +299,7 @@ function App() {
 
                     <div className="shap-legend">
                       <span className="positive-label">+ Toward fire-start</span>
-                      <span className="negative-label">− Away from fire-start</span>
+                      <span className="negative-label">- Away from fire-start</span>
                     </div>
 
                     <div className="shap-list">

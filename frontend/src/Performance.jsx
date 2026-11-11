@@ -1,5 +1,6 @@
 ﻿import { useEffect, useState } from 'react'
 import './Performance.css'
+import { API_URL } from './api'
 
 const metricInfo = [
   {
@@ -40,7 +41,7 @@ function Performance() {
 
     async function loadEvaluation() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/evaluation')
+        const response = await fetch(`${API_URL}/api/evaluation`)
 
         if (!response.ok) {
           throw new Error('Could not load model evaluation data.')
@@ -65,7 +66,7 @@ function Performance() {
 
     async function loadComparison() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/model-comparison')
+        const response = await fetch(`${API_URL}/api/model-comparison`)
 
         if (!response.ok) {
           throw new Error('Could not load model comparison data.')

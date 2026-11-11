@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import { GeoJSON, MapContainer, TileLayer, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import './Geography.css'
+import { API_URL } from './api'
 
 function formatDate(timestamp) {
   if (!timestamp) return 'Not available'
@@ -57,7 +58,7 @@ function Geography() {
 
       try {
         const response = await fetch(
-          'http://127.0.0.1:8000/api/fire-perimeters',
+          `${API_URL}/api/fire-perimeters`,
           { signal: controller.signal }
         )
 
@@ -202,7 +203,7 @@ function Geography() {
             <div className="geography-map-heading">
               <div>
                 <p className="eyebrow">HISTORICAL GEOGRAPHIC DATA</p>
-                <h2>California · 2024</h2>
+                <h2>California - 2024</h2>
               </div>
               <span className="map-year-label">CAL FIRE</span>
             </div>
@@ -291,7 +292,7 @@ function Geography() {
           </section>
 
           <p className="geography-source">
-            Source: {fireData.source} · Historical perimeter records · {fireData.year}
+            Source: {fireData.source} - Historical perimeter records - {fireData.year}
           </p>
           <p className="geography-disclaimer">
             These boundaries represent historical recorded fire perimeters.
