@@ -158,8 +158,32 @@ Keep the backend and frontend terminals running while using the application.
 | Geographic Exploration | `/geography` | Explore historical 2024 CAL FIRE perimeters |
 | Future Updates | `/future-updates` | View planned improvements |
 
-## Backend API Endpoints
+## Screenshots
 
+The following screenshots show the main pages and an example prediction from the deployed application.
+
+<p align="center">
+  <img src="screenshots/home.png" width="48%" alt="ForestWatch Home Page" />
+  <img src="screenshots/predict.png" width="48%" alt="Prediction Input Page" />
+</p>
+
+<p align="center">
+  <img src="screenshots/predict-result.png" width="80%" alt="Prediction Result with SHAP Explanation" />
+</p>
+
+<p align="center">
+  <img src="screenshots/performance.png" width="48%" alt="Model Performance Page" />
+  <img src="screenshots/weather.png" width="48%" alt="Live Weather Page" />
+</p>
+
+<p align="center">
+  <img src="screenshots/geography.png" width="48%" alt="Geographic Exploration Page" />
+  <img src="screenshots/future-updates.png" width="48%" alt="Future Updates Page" />
+</p>
+
+---
+
+## Backend API Endpoints
 | Method | Endpoint | Purpose |
 |---|---|---|
 | GET | `/` | Backend welcome response |
